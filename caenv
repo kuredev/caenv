@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# シェルスクリプトが直接実行されたかどうかをチェックする
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    echo "このスクリプトはsource コマンドを使用してください。ex: source ./caenv"
+    exit 1
+fi
+
+# Rustでコンパイルされたバイナリファイルのパス
+binary_path="./target/debug/main"
+
+# バイナリを実行して出力を取得
+output=$("$binary_path")
+
+export CLOUDAUTOMATOR_API_KEY=$output
+
+echo "Cloud AutomatorのAPIキーが CLOUDAUTOMATOR_API_KEY 環境変数に設定されました"
